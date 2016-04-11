@@ -124,11 +124,9 @@ void spiral() {
 
     fill(255,255,0);
     
-    float elapsedSeconds = millis()*.001;
     float angle_incr = radians(2 + frameCount/15.0);
   
-    float cx = sun.sunX;
-    float cy = sun.sunY;
+    
     float outer_rad = 120*.45;
     
     float sm_diameter = 4;
@@ -137,8 +135,8 @@ void spiral() {
       float ratio = i/(float)nbr_circles;
       float spiral_rad = ratio * outer_rad;
       float angle = i*angle_incr;
-      float x = cx + cos(angle) * spiral_rad;
-      float y = cy + sin(angle) * spiral_rad;
+      float x = sun.sunX + cos(angle) * spiral_rad;
+      float y = sun.sunY + sin(angle) * spiral_rad;
     
       // draw tiny circle at x,y
       ellipse(x, y, sm_diameter, sm_diameter);
