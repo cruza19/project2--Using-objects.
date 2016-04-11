@@ -386,9 +386,14 @@ strokeWeight(1);
     blue.yMon=  blue.yMon  +  (minion.yMin-blue.yMon) / 125;
    
     if (dist(blue.xMon, blue.yMon, minion.xMin, minion.yMin) < 50) {   ///Minion chasing nugget
+      constrain(xMon,0,width);
+      constrain(yMon,0,height);
       xMon= random(10, 750);
       yMon = random(10, 500);
+      minion.xMin= random(10, 750);
+      minion.yMin = random(10, 500);
       Mscore = Mscore+1;
+      
   
     }
     
