@@ -7,8 +7,7 @@ Monster blue;
 float horizon;
 int score=0;
 int Mscore=0;
-int nbr_circles = 100;
-float angle_incr = 2*PI / nbr_circles;
+
 
 void setup()
 {
@@ -21,9 +20,9 @@ void setup()
   sun= new Sun (color(255, 177, 8), 0, height*3, 0);
   minion=new Hero (height/2, width/2); 
   nugget= new Gold(height/2, width/2);
-  dog1= new Dog(color(185,154,86),0,0,60,30,20,20);
-  dog2= new Dog(color(185,108,86),0,0,20,10,40,40);
-  blue= new Monster(0,0);
+  dog1= new Dog(color(185, 154, 86), 0, 0, 60, 30, 20, 20);
+  dog2= new Dog(color(185, 108, 86), 0, 0, 20, 10, 40, 40);
+  blue= new Monster(0, 0);
 }
 
 
@@ -31,7 +30,7 @@ void draw()
 {
   scene();
   sun.sunmove();
-  
+
   setting();
   blue.monshow();
   minion.minmove();
@@ -62,7 +61,7 @@ void scene()
 void setting()
 
 
-  /////House
+/////House
 
 { 
   fill( 250, 100, 0 );                // Orange
@@ -120,28 +119,25 @@ void setting()
 }
 
 void spiral() {
-    
 
-    fill(255,255,0);
-    
-    float angle_incr = radians(2 + frameCount/15.0);
-  
-    
-    float outer_rad = 120*.45;
-    
-    float sm_diameter = 4;
-    
-    for (int i = 1; i <= nbr_circles; ++i) {
-      float ratio = i/(float)nbr_circles;
-      float spiral_rad = ratio * outer_rad;
-      float angle = i*angle_incr;
-      float x = sun.sunX + cos(angle) * spiral_rad;
-      float y = sun.sunY + sin(angle) * spiral_rad;
-    
-      // draw tiny circle at x,y
-      ellipse(x, y, sm_diameter, sm_diameter);
-    }
+
+  fill(255, 255, 0);
+  int nbr_circles = 100;
+  float angle_incr = radians(2 + frameCount/15.0);
+  float outer_rad = 120*.45;
+  float sm_diameter = 4;
+
+  for (int i = 1; i <= nbr_circles; ++i) {
+    float ratio = i/(float)nbr_circles;
+    float spiral_rad = ratio * outer_rad;
+    float angle = i*angle_incr;
+    float x = sun.sunX + cos(angle) * spiral_rad;
+    float y = sun.sunY + sin(angle) * spiral_rad;
+
+    // draw tiny circle at x,y
+    ellipse(x, y, sm_diameter, sm_diameter);
   }
+}
 
 /////Trees
 
@@ -249,66 +245,64 @@ class Gold {
     }
   }
 }
-  class Dog  {
-    color c;
-    float xDog;
-    float yDog;
-    float dxDog;
-    float dyDog;
-    float wDog;
-    float hDog;
-   
-    Dog(color tempC,  float tempxDog, float tempyDog,  float tempwDog, float temphDog, float tempdxDog, float tempdyDog){
-      c = tempC;
-      xDog=tempxDog;
-      yDog=tempyDog;
-      dxDog=tempdxDog;
-      dyDog=tempdyDog;
-      wDog=tempwDog;
-      hDog=temphDog;
-    }
-    
-    void dogshow(){
-      stroke(0);
-      fill(c);
-      rectMode(CORNER);
-      rect(xDog, yDog, wDog, hDog);
-      fill(255,0,0);
-      
-}
-    void dogmove(){
+class Dog {
+  color c;
+  float xDog;
+  float yDog;
+  float dxDog;
+  float dyDog;
+  float wDog;
+  float hDog;
+
+  Dog(color tempC, float tempxDog, float tempyDog, float tempwDog, float temphDog, float tempdxDog, float tempdyDog) {
+    c = tempC;
+    xDog=tempxDog;
+    yDog=tempyDog;
+    dxDog=tempdxDog;
+    dyDog=tempdyDog;
+    wDog=tempwDog;
+    hDog=temphDog;
+  }
+
+  void dogshow() {
+    stroke(0);
+    fill(c);
+    rectMode(CORNER);
+    rect(xDog, yDog, wDog, hDog);
+    fill(255, 0, 0);
+  }
+  void dogmove() {
     xDog=  xDog  +  (minion.xMin-100-xDog) / dxDog;
     yDog=  yDog  +  (minion.yMin-yDog) / dyDog;
     if (xDog < 0) {
-     xDog=0;
+      xDog=0;
     }
-   if (nugget.nugX-minion.xMin>=0){
-    fill(c);
-    rect(xDog+wDog, yDog-hDog/2, wDog/2, hDog);//head
-    fill(255,255,255);
-    ellipse(xDog+wDog+wDog/6, yDog-hDog/4, wDog/6, wDog/6);
-    ellipse(xDog+wDog+wDog/3, yDog-hDog/4, wDog/6, wDog/6);
-    fill(0);
-    line(xDog, yDog, xDog-hDog/1.5,yDog-hDog/2);//tail 
-    line(xDog+wDog, yDog+hDog, xDog+wDog/1.5,yDog+hDog*1.5); //1leg
-    line(xDog, yDog+hDog, xDog-wDog/3,yDog+hDog*1.5);  //2leg
-       
-   }
-  if (nugget.nugX-minion.xMin<=0){
-   fill(c);
-    rect(xDog-wDog/2, yDog-hDog/2, wDog/2, hDog);//head
-    fill(255,255,255);
-    ellipse(xDog-wDog+wDog*0.85, yDog-hDog/4, wDog/6, wDog/6);
-    ellipse(xDog-wDog+wDog/1.5, yDog-hDog/4, wDog/6, wDog/6);
-    fill(0);
-    line(xDog+wDog, yDog, xDog+hDog*3,yDog-hDog/2);//tail 
-    line(xDog+wDog, yDog+hDog, xDog+wDog*1.5,yDog+hDog*1.5); //1leg
-    line(xDog, yDog+hDog, xDog+wDog*0.5,yDog+hDog*1.5);  //2leg
-      }
+    if (nugget.nugX-minion.xMin>=0) {
+      fill(c);
+      rect(xDog+wDog, yDog-hDog/2, wDog/2, hDog);//head
+      fill(255, 255, 255);
+      ellipse(xDog+wDog+wDog/6, yDog-hDog/4, wDog/6, wDog/6);
+      ellipse(xDog+wDog+wDog/3, yDog-hDog/4, wDog/6, wDog/6);
+      fill(0);
+      line(xDog, yDog, xDog-hDog/1.5, yDog-hDog/2);//tail 
+      line(xDog+wDog, yDog+hDog, xDog+wDog/1.5, yDog+hDog*1.5); //1leg
+      line(xDog, yDog+hDog, xDog-wDog/3, yDog+hDog*1.5);  //2leg
+    }
+    if (nugget.nugX-minion.xMin<=0) {
+      fill(c);
+      rect(xDog-wDog/2, yDog-hDog/2, wDog/2, hDog);//head
+      fill(255, 255, 255);
+      ellipse(xDog-wDog+wDog*0.85, yDog-hDog/4, wDog/6, wDog/6);
+      ellipse(xDog-wDog+wDog/1.5, yDog-hDog/4, wDog/6, wDog/6);
+      fill(0);
+      line(xDog+wDog, yDog, xDog+hDog*3, yDog-hDog/2);//tail 
+      line(xDog+wDog, yDog+hDog, xDog+wDog*1.5, yDog+hDog*1.5); //1leg
+      line(xDog, yDog+hDog, xDog+wDog*0.5, yDog+hDog*1.5);  //2leg
+    }
   }
-  }
-  
-  class Monster {
+}
+
+class Monster {
 
   float xMon; 
   float yMon;
@@ -319,91 +313,88 @@ class Gold {
   void monshow()
   {
     fill(0);
-   ellipse(xMon,yMon,225,225);
-   fill(20,100,150);
-   noStroke();
-   ellipse(xMon,yMon,200,200);
-  
-   ellipseMode(CENTER);
+    ellipse(xMon, yMon, 225, 225);
+    fill(20, 100, 150);
+    noStroke();
+    ellipse(xMon, yMon, 200, 200);
+
+    ellipseMode(CENTER);
     fill(225);
-stroke(0);
-strokeWeight(3);
-ellipse(xMon-30,yMon+45,15,25);
-ellipse(xMon-15,yMon+45,15,25);
-ellipse(xMon,yMon+45,15,25);
-ellipse(xMon+15,yMon+45,15,25);
-ellipse(xMon+30,yMon+45,15,25);
+    stroke(0);
+    strokeWeight(3);
+    ellipse(xMon-30, yMon+45, 15, 25);
+    ellipse(xMon-15, yMon+45, 15, 25);
+    ellipse(xMon, yMon+45, 15, 25);
+    ellipse(xMon+15, yMon+45, 15, 25);
+    ellipse(xMon+30, yMon+45, 15, 25);
 
 
-strokeWeight(3);
-line(xMon-45,yMon+45,xMon+42,yMon+45);
-line(xMon-45,yMon+45,xMon-55,yMon+60);
-line(xMon+42,yMon+45,xMon+52,yMon+60);
-   //block
-   noStroke();
-   fill(20,100,150);
-   rect(xMon,yMon+19,100,51);
-     //chin shadow
-     fill(20,80,130);
-     ellipse(xMon,yMon+75,80,10);
-    
-//nose - top
-fill(70);
-triangle(xMon-30,yMon+15,xMon,yMon,xMon+30,yMon+15);
-  //main nose
-  fill(30);
-  triangle(xMon-30,yMon+15,xMon,yMon+40,xMon+30,yMon+15);
-  fill(20,100,150);
-  //bloking
-  ellipse(xMon-10,yMon+30,10,15);
-  ellipse(xMon+10,yMon+30,10,15);
- 
-//eyes - shadow
-fill(20,80,130);
-ellipse(xMon-40,yMon-35,80,80);
-ellipse(xMon+40,yMon-35,80,80);
-  //eyes
-  //stroke(30);
-  fill(255);
-  ellipse(xMon-40,yMon-35,60,60);
-  ellipse(xMon+40,yMon-35,60,60);
-  noStroke();
-    fill(20,150,100);
-  ellipse(xMon-25,yMon-35,30,30);
-  ellipse(xMon+25,yMon-35,30,30);
-  //color
-  fill(20);
-  ellipse(xMon-25,yMon-35,20,20);
-  ellipse(xMon+25,yMon-35,20,20);
-strokeWeight(1); 
-}
-  
+    strokeWeight(3);
+    line(xMon-45, yMon+45, xMon+42, yMon+45);
+    line(xMon-45, yMon+45, xMon-55, yMon+60);
+    line(xMon+42, yMon+45, xMon+52, yMon+60);
+    //block
+    noStroke();
+    fill(20, 100, 150);
+    rect(xMon, yMon+19, 100, 51);
+    //chin shadow
+    fill(20, 80, 130);
+    ellipse(xMon, yMon+75, 80, 10);
+
+    //nose - top
+    fill(70);
+    triangle(xMon-30, yMon+15, xMon, yMon, xMon+30, yMon+15);
+    //main nose
+    fill(30);
+    triangle(xMon-30, yMon+15, xMon, yMon+40, xMon+30, yMon+15);
+    fill(20, 100, 150);
+    //bloking
+    ellipse(xMon-10, yMon+30, 10, 15);
+    ellipse(xMon+10, yMon+30, 10, 15);
+
+    //eyes - shadow
+    fill(20, 80, 130);
+    ellipse(xMon-40, yMon-35, 80, 80);
+    ellipse(xMon+40, yMon-35, 80, 80);
+    //eyes
+    //stroke(30);
+    fill(255);
+    ellipse(xMon-40, yMon-35, 60, 60);
+    ellipse(xMon+40, yMon-35, 60, 60);
+    noStroke();
+    fill(20, 150, 100);
+    ellipse(xMon-25, yMon-35, 30, 30);
+    ellipse(xMon+25, yMon-35, 30, 30);
+    //color
+    fill(20);
+    ellipse(xMon-25, yMon-35, 20, 20);
+    ellipse(xMon+25, yMon-35, 20, 20);
+    strokeWeight(1);
+  }
+
   void monmove()
   {
     blue.xMon=  blue.xMon  +  (minion.xMin-blue.xMon) / 125;
     blue.yMon=  blue.yMon  +  (minion.yMin-blue.yMon) / 125;
-   
+
     if (dist(blue.xMon, blue.yMon, minion.xMin, minion.yMin) < 50) {   ///Minion chasing nugget
-      constrain(xMon,0,width);
-      constrain(yMon,0,height);
+      constrain(xMon, 0, width);
+      constrain(yMon, 0, height);
       xMon= random(10, 750);
       yMon = random(10, 500);
       minion.xMin= random(10, 750);
       minion.yMin = random(10, 500);
       Mscore = Mscore+1;
-      
-  
     }
-    
   }
-  }
-    
+}
+
 void mousePressed() {          ///nug appears on click
   nugget.nugX= mouseX;
   nugget.nugY= mouseY;
 }
 void out() {                        //// quit after 10 times the creature eats the nugget
-  if (score==100 || key=='q') {
+  if (score==20 || Mscore==20 || key=='q') {
     exit();
   }
 }
@@ -417,7 +408,6 @@ void msg()
   text( "Abel Cruz", 10, height-10 );
   textSize(20);
   fill(250, 50, 0);
-  text("Minion "+  score,width-200, horizon-220);
-  text("Monster "+  Mscore,width-200, horizon-180);
-
+  text("Minion "+  score, width-200, horizon-220);
+  text("Monster "+  Mscore, width-200, horizon-180);
 }  
