@@ -88,6 +88,3 @@ Puppy is a small Dog object that chases the big dog.
 7. Copy and paste your completed code into **`p2-lastname.java`**
  
 
-
-                            NOTE:  THIS PROJECT DESCRIPTION IS INCOMPLETE!
-                            DO NOT USE THESE INSTRUCTION UNTIL PROJECT IS ASSIGNED.
